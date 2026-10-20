@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Scene 3D prosedural hamparan sawah saat matahari terbit, dibuat dengan Three.js & WebGL." />
+    <meta name="theme-color" content="#e9c995" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='28' fill='%23f5d27a'/><path d='M12 46c10-6 30-6 40 0v6H12z' fill='%234c8015'/></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Sawah Pagi — 3D Scene</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="scene" aria-label="Scene 3D hamparan sawah interaktif"></canvas>
+
+    <div id="loader" class="loader" aria-hidden="true">
+      <div class="loader__sun"></div>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <div class="overlay__kicker">
+        <span class="overlay__kicker-line"></span>
+        <span id="overlay-kicker-text">Fajar Nusantara</span>
+        <button id="overlay-toggle" class="overlay__toggle" type="button" aria-label="Sembunyikan teks">×</button>
+      </div>
+      <h1 id="overlay-title" class="overlay__title">
+        Sawah <em id="overlay-title-accent">Pagi</em>
+      </h1>
+      <p class="overlay__hint">Gerakkan kursor untuk menyibak padi &middot; Klik sawah untuk hembusan angin &amp; burung</p>
+      <div class="overlay__controls">
+        <div class="time-switcher" role="group" aria-label="Pilih suasana waktu">
+          <button class="time-btn is-active" data-time="pagi" type="button">
+            <svg class="time-btn__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="10" cy="10" r="3.6" />
+              <path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M15.3 4.7l-1.4 1.4M6.1 13.9l-1.4 1.4" stroke-linecap="round" />
+            </svg>
+            <span>Pagi</span>
+          </button>
+          <button class="time-btn" data-time="senja" type="button">
+            <svg class="time-btn__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M2.5 14.5h15M4.5 17h11" stroke-linecap="round" />
+              <path d="M5.5 14.5a4.5 4.5 0 0 1 9 0" />
+              <path d="M10 6v2M4.8 8.2l1.3 1.3M15.2 8.2l-1.3 1.3" stroke-linecap="round" />
+            </svg>
+            <span>Senja</span>
+          </button>
+          <button class="time-btn" data-time="malam" type="button">
+            <svg class="time-btn__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M14.8 12.6A5.8 5.8 0 0 1 7.4 5.2a5.8 5.8 0 1 0 7.4 7.4Z" stroke-linejoin="round" />
+            </svg>
+            <span>Malam</span>
+          </button>
+        </div>
+
+        <button id="weather-toggle" class="weather-btn" data-weather="cerah" type="button" aria-label="Ubah cuaca">
+          <svg class="time-btn__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M5.8 12.5a3.5 3.5 0 0 1 .4-7A4.6 4.6 0 0 1 15 7a3 3 0 0 1 .5 5.5H5.8Z" stroke-linejoin="round" />
+            <path d="M7 15l-1 2.2M10.5 15l-1 2.2M14 15l-1 2.2" stroke-linecap="round" />
+          </svg>
+          <span id="weather-label">Hujan Rintik</span>
+        </button>
+      </div>
+
+      <div class="cam-switcher" role="group" aria-label="Pilih sudut pandang kamera">
+        <span class="cam-switcher__label">Sudut Pandang</span>
+        <button class="cam-btn is-active" data-cam="hamparan" type="button">Hamparan</button>
+        <button class="cam-btn" data-cam="saung" type="button">Teras Saung</button>
+        <button class="cam-btn" data-cam="pematang" type="button">Pematang Air</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

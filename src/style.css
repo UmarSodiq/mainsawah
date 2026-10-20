@@ -1,0 +1,280 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #e9c995;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+/* ---------- Loader ---------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 15% 30%, #fff6dc 0%, #f1d6a2 35%, #e2bf8c 100%);
+  transition: opacity 1.4s ease;
+  z-index: 10;
+}
+
+.loader.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader__sun {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fffbe9;
+  box-shadow: 0 0 60px 30px rgba(255, 240, 200, 0.8);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+}
+
+/* ---------- Editorial Overlay ---------- */
+.overlay {
+  position: fixed;
+  left: clamp(22px, 4.5vw, 56px);
+  bottom: clamp(20px, 5.2vh, 46px);
+  color: #fffaf0;
+  text-shadow: 0 2px 18px rgba(28, 22, 8, 0.52);
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 5;
+}
+
+.overlay.is-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.overlay__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(255, 244, 214, 0.86);
+}
+
+.overlay__kicker-line {
+  width: 26px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 244, 214, 0.9), rgba(255, 244, 214, 0.2));
+}
+
+.overlay__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.8vw, 4.1rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: 0.015em;
+  color: #fffdf7;
+  text-shadow: 0 4px 24px rgba(25, 20, 6, 0.48);
+}
+
+.overlay__title em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: #ffeeb8;
+  padding-left: 0.04em;
+  display: inline-block;
+  transition: opacity 0.28s ease, transform 0.28s ease, color 0.6s ease;
+}
+
+.overlay__title em.is-switching {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.overlay__hint {
+  margin: 0.55rem 0 0.9rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.75rem, 1.02vw, 0.86rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: rgba(255, 250, 238, 0.86);
+}
+
+/* ---------- Controls Row (Time + Weather) & Camera Switcher ---------- */
+.overlay__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-switcher {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(20, 24, 14, 0.36);
+  border: 1px solid rgba(255, 248, 228, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.time-btn,
+.weather-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 250, 240, 0.84);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.weather-btn {
+  padding: 9px 15px;
+  background: rgba(20, 24, 14, 0.36);
+  border: 1px solid rgba(255, 248, 228, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+.time-btn__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.88;
+}
+
+.time-btn:hover,
+.weather-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 250, 240, 0.16);
+}
+
+.time-btn.is-active,
+.weather-btn.is-active {
+  background: rgba(255, 248, 228, 0.94);
+  color: #1f2812;
+  font-weight: 600;
+  text-shadow: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
+.cam-switcher {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 5px 3px 12px;
+  border-radius: 999px;
+  background: rgba(16, 20, 12, 0.3);
+  border: 1px solid rgba(255, 248, 228, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.cam-switcher__label {
+  font-family: var(--font-sans);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 244, 214, 0.66);
+  margin-right: 6px;
+}
+
+.cam-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 250, 240, 0.78);
+  font-family: var(--font-sans);
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.22s ease, color 0.22s ease;
+}
+
+.cam-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 250, 240, 0.13);
+}
+
+.cam-btn.is-active {
+  background: rgba(255, 244, 210, 0.24);
+  color: #fffdf5;
+  font-weight: 600;
+}
+
+.overlay__toggle {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid rgba(255, 250, 240, 0.45);
+  border-radius: 50%;
+  background: rgba(25, 28, 18, 0.28);
+  color: inherit;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.overlay__toggle:hover {
+  opacity: 1;
+  background: rgba(25, 28, 18, 0.5);
+}
